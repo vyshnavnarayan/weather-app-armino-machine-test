@@ -9,37 +9,35 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/og.png'),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/og.png'),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body:  Padding(
-              padding: const EdgeInsets.only(left: 34,),
-              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  WeatherDetails(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  LiveWeather(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  RandomText()
-                ],
-              ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body:  Padding(
+            padding: const EdgeInsets.only(left: 34,),
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                WeatherDetails(),
+                SizedBox(
+                  height: 30,
+                ),
+                LiveWeather(),
+                SizedBox(
+                  height: 30,
+                ),
+                RandomText()
+              ],
             ),
-          
-        ),
+          ),
+        
       ),
     );
   }
