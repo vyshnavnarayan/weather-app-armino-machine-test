@@ -1,3 +1,4 @@
+import 'package:demo_application/models/current_weather_model.dart';
 import 'package:demo_application/utils/appstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class LiveWeather extends StatelessWidget {
                           var hourlyData = data.list![index + 5];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
+                              horizontal: 10,
                               vertical: 15,
                             ),
                             child: Column(
@@ -134,7 +135,7 @@ class LiveWeather extends StatelessWidget {
                           var hourlyData = data.list![index + 2];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
+                              horizontal: 10,
                               vertical: 15,
                             ),
                             child: Column(

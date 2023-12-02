@@ -3,7 +3,6 @@ import 'package:demo_application/widgets/random_text.dart';
 import 'package:demo_application/widgets/weather_details.dart';
 import 'package:flutter/material.dart';
 
-
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -18,32 +17,27 @@ class Home extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body:  Padding(
-            padding: const EdgeInsets.only(left: 34,right: 34),
-            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                WeatherDetails(),
-                SizedBox(
-                  height: 10,
-                ),
-                LiveWeather(),
-                SizedBox(
-                  height: 10,
-                ),
-                RandomText()
-              ],
-            ),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 34, right: 34),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: 40,
+              ),
+              WeatherDetails(),
+              SizedBox(
+                height: 30,
+              ),
+              LiveWeather(),
+              SizedBox(
+                height: 30,
+              ),
+              RandomText()
+            ],
           ),
-        
+        ),
       ),
     );
   }
 }
-
-
-
-
-

@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import '../consts/strings.dart';
 
-
 // class WeatherService {
 //   static const String apiKey = '41ed71f70394fc5466a9752316d6ee67';
 

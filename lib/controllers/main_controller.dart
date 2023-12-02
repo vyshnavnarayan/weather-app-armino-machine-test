@@ -5,13 +5,9 @@ import 'package:get/get.dart';
 class MainController extends GetxController {
   @override
   void onInit() async {
-    try {
-      await getUserLocation();
-      currentWeatherData = await getCurrentWeather(latitude.value, longitude.value);
-      hourlyWeatherData = await getHourlyWeather(latitude.value, longitude.value);
-    } catch (e) {
-      print('Error: $e');
-    }
+    await getUserLocation();
+    currentWeatherData = getCurrentWeather(latitude.value, longitude.value);
+    hourlyWeatherData = getHourlyWeather(latitude.value, longitude.value);
 
     super.onInit();
   }
@@ -27,31 +23,27 @@ class MainController extends GetxController {
     bool isLocationEnabled;
     LocationPermission userPermission;
 
-    try {
-      isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!isLocationEnabled) {
-        throw Exception("Location is not enabled");
-      }
-
-      userPermission = await Geolocator.checkPermission();
-      if (userPermission == LocationPermission.deniedForever) {
-        throw Exception("Permission is denied forever");
-      } else if (userPermission == LocationPermission.denied) {
-        userPermission = await Geolocator.requestPermission();
-        if (userPermission == LocationPermission.denied) {
-          throw Exception("Permission is denied");
-        }
-      }
-
-      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-          .then((value) {
-        latitude.value = value.latitude;
-        longitude.value = value.longitude;
-        isloaded.value = true;
-      });
-    } catch (e) {
-      print('Location Error: $e');
-      throw e; 
+    isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!isLocationEnabled) {
+      return Future.error("Location is not enabled");
     }
+
+    userPermission = await Geolocator.checkPermission();
+    if (userPermission == LocationPermission.deniedForever) {
+      return Future.error("Permission is denied forever");
+    } else if (userPermission == LocationPermission.denied) {
+      userPermission = await Geolocator.requestPermission();
+      if (userPermission == LocationPermission.denied) {
+        return Future.error("Permission is denied");
+      }
+    }
+
+    return await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+        .then((value) {
+      latitude.value = value.latitude;
+      longitude.value = value.longitude;
+      isloaded.value = true;
+    });
   }
 }

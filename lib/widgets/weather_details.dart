@@ -41,7 +41,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
     showMenu(
       color: boxColor,
       context: context,
-      position: RelativeRect.fromLTRB(100, 100, 0, 0),
+      position: RelativeRect.fromLTRB(160, 0, 160, 0),
       items: days.map((String day) {
         return PopupMenuItem<String>(
           child: InkWell(
@@ -71,7 +71,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         color: boxColor,
       ),
       child: FutureBuilder(
-        future: controller.currentWeatherData,
+        future: _fetchCurrentWeatherData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           try {
             if (snapshot.hasData) {
@@ -80,28 +80,23 @@ class _WeatherDetailsState extends State<WeatherDetails> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      _showPopupMenu(context);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          selectedDay,
-                          style: appstyle(22, boxElementColor, FontWeight.w500),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              _showPopupMenu(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: boxElementColor,
-                              size: 30,
-                            ))
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        selectedDay,
+                        style: appstyle(22, boxElementColor, FontWeight.w500),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            _showPopupMenu(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: boxElementColor,
+                            size: 30,
+                          ))
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -189,5 +184,14 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         },
       ),
     );
+  }
+
+  Future<CurrentWeatherData> _fetchCurrentWeatherData() async {
+    try {
+      return await controller.currentWeatherData;
+    } catch (e) {
+      print('Current Weather Data Error: $e');
+      throw e;
+    }
   }
 }
