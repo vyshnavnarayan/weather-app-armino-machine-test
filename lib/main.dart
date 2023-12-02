@@ -1,5 +1,4 @@
 import 'package:demo_application/screen/weather.dart';
-import 'package:demo_application/utils/our_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,8 +13,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: CustomThemes.lightTheme,
-      darkTheme: CustomThemes.darkTheme,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home:  Home()

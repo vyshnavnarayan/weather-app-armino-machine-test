@@ -1,6 +1,6 @@
-import 'package:demo_application/screen/live_weather.dart';
-import 'package:demo_application/screen/random_text.dart';
-import 'package:demo_application/screen/weather_details.dart';
+import 'package:demo_application/widgets/live_weather.dart';
+import 'package:demo_application/widgets/random_text.dart';
+import 'package:demo_application/widgets/weather_details.dart';
 import 'package:flutter/material.dart';
 
 
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body:  Padding(
-            padding: const EdgeInsets.only(left: 34,),
+            padding: const EdgeInsets.only(left: 34,right: 34),
             child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
@@ -27,11 +27,11 @@ class Home extends StatelessWidget {
                 ),
                 WeatherDetails(),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 LiveWeather(),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 RandomText()
               ],

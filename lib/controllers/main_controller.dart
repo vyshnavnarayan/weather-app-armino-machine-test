@@ -1,19 +1,21 @@
 import 'package:demo_application/services/api_services.dart';
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class MainController extends GetxController {
   @override
   void onInit() async {
-    await getUserLocation();
-    currentWeatherData = getCurrentWeather(latitude.value, longitude.value);
-    hourlyWeatherData = getHourlyWeather(latitude.value, longitude.value);
+    try {
+      await getUserLocation();
+      currentWeatherData = await getCurrentWeather(latitude.value, longitude.value);
+      hourlyWeatherData = await getHourlyWeather(latitude.value, longitude.value);
+    } catch (e) {
+      print('Error: $e');
+    }
 
     super.onInit();
   }
 
-  var isDark = false.obs;
   dynamic currentWeatherData;
   dynamic hourlyWeatherData;
   var latitude = 0.0.obs;
@@ -21,33 +23,35 @@ class MainController extends GetxController {
 
   var isloaded = false.obs;
 
-
-
   getUserLocation() async {
     bool isLocationEnabled;
     LocationPermission userPermission;
 
-    isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!isLocationEnabled) {
-      return Future.error("Location is not enabled");
-    }
-
-    userPermission = await Geolocator.checkPermission();
-    if (userPermission == LocationPermission.deniedForever) {
-      return Future.error("Permission is denied forever");
-    } else if (userPermission == LocationPermission.denied) {
-      userPermission = await Geolocator.requestPermission();
-      if (userPermission == LocationPermission.denied) {
-        return Future.error("Permission is denied");
+    try {
+      isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!isLocationEnabled) {
+        throw Exception("Location is not enabled");
       }
-    }
 
-    return await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
-        .then((value) {
-      latitude.value = value.latitude;
-      longitude.value = value.longitude;
-      isloaded.value = true;
-    });
+      userPermission = await Geolocator.checkPermission();
+      if (userPermission == LocationPermission.deniedForever) {
+        throw Exception("Permission is denied forever");
+      } else if (userPermission == LocationPermission.denied) {
+        userPermission = await Geolocator.requestPermission();
+        if (userPermission == LocationPermission.denied) {
+          throw Exception("Permission is denied");
+        }
+      }
+
+      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((value) {
+        latitude.value = value.latitude;
+        longitude.value = value.longitude;
+        isloaded.value = true;
+      });
+    } catch (e) {
+      print('Location Error: $e');
+      throw e; 
+    }
   }
 }
